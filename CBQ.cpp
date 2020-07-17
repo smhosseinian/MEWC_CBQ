@@ -2,7 +2,7 @@
 |                                                                                                          |
 |  CBQ algorithm (Combinatorial Bnb algorithm with Quadratic relaxation upper bound for the MEWC problem)  |
 |                                                                                                          |
-|                Copyright (c) 2019 Seyedmohammadhossein Hosseinian. All rights reserved.                  |
+|                Copyright (c) 2017 Seyedmohammadhossein Hosseinian. All rights reserved.                  |
 |                                                                                                          |
 |__________________________________________________________________________________________________________|
 
