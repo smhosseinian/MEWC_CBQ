@@ -68,22 +68,22 @@ double get_cpu_time() {
 
 #pragma region "Heuristic"
 
-struct elm {									//keeps a "index-value" pairs, used for sorting "indices" based on "values"
+struct elm {
 	int n;
 	double val;
 };
 
-bool ValueCmp(elm const & a, elm const & b)		//comparison method based on "value" attribute of a "index-value" pair (i.e. elm)
+bool ValueCmp(elm const & a, elm const & b)
 {
 	return a.val > b.val;
 }
 
-struct clq {									//clique: keeps list of vertices as well as the clique's total edge weight
+struct clq {
 	vector<int> vertexList;
 	double weight;
 };
 
-double* makeQ(double **Adj) {					//generates the upper-triangle part of matrix Q, and puts it in a 1-d array to be used in the eigen-decomposition algorithm
+double* makeQ(double **Adj) {
 	double sumWeight[N];
 	for (int i = 0; i<N; i++) {
 		sumWeight[i] = 0;
@@ -117,7 +117,7 @@ double* makeQ(double **Adj) {					//generates the upper-triangle part of matrix 
 	return Q_a;
 }
 
-clq extractClique(double** Adj, vector<elm> & EVec) {		//extracts clique based on a sorted list of "index-value" pair (will be used to extract clique based on a sorted eigenvector)
+clq extractClique(double** Adj, vector<elm> & EVec) {
 	clq clique;
 	clique.vertexList.push_back(EVec[0].n);
 	clique.weight = 0;
@@ -189,8 +189,8 @@ double CCH(double **Adj)
 
 struct node {
 	int n;
-	int degree;			//degree of the vertex in the subgraph induced by R (changing as R is updated)
-	int ex_deg;			//sum of "degree" of the vertices adjacent to this vertex in the subgraph induced by R (See definition of ex_deg(q) in Tomita(2007) page 101)
+	int degree;
+	int ex_deg;
 };
 
 bool degCmp(node const & a, node const & b)
@@ -203,7 +203,7 @@ bool ex_degCmp(node const & a, node const & b)
 	return a.ex_deg < b.ex_deg;
 }
 
-int* sortV(double** Adj, int & Delta) {			//sorts the vertices based on "degree" and "ex_degree" (See definition of ex_deg(q) in Tomita(2007) page 101)
+int* sortV(double** Adj, int & Delta) {
 	int* V = new int[N];
 	vector<node> R;
 	vector<node> Rmin;
@@ -222,8 +222,8 @@ int* sortV(double** Adj, int & Delta) {			//sorts the vertices based on "degree"
 		}
 		R.push_back(v);
 	}
-	Delta = dlt;								//inputs Delta and change its value in the function after calculating the degree of all vertices
-	sort(R.begin(), R.end(), degCmp);			//Sorts "node"s in R in a decreasing order "degree"
+	Delta = dlt;
+	sort(R.begin(), R.end(), degCmp);
 	int minDeg = (R.end()-1)->degree;
 	vector<node>::iterator itr = R.end()-1;
 	while(itr->degree == minDeg){
@@ -235,7 +235,7 @@ int* sortV(double** Adj, int & Delta) {			//sorts the vertices based on "degree"
 			itr--;
 		}
 	}
-	node p;										//The "node" with the minimum "ex_deg" among nodes in Rmin
+	node p;
 	for (int k = N - 1; k >= 0; k--) {
 		if (Rmin.size() == 1) {
 			p = Rmin[0];
@@ -249,7 +249,7 @@ int* sortV(double** Adj, int & Delta) {			//sorts the vertices based on "degree"
 					}
 				}
 			}
-			sort(Rmin.begin(), Rmin.end(), ex_degCmp);				//Sorts "node"s in Rmin in an increasing order "ex_deg"
+			sort(Rmin.begin(), Rmin.end(), ex_degCmp);
 			p = Rmin[0];
 		}
 		V[k] = p.n;
@@ -294,7 +294,7 @@ struct vertex {
 };
 
 class Equation {
-public:										//lam, b_p, q_p are parameters of the eqution
+public:	//lam, b_p, q_p are parameters of the eqution
 	vector<double> lam;
 	vector<double> b_p;
 	vector<double> q_p;
@@ -302,7 +302,7 @@ public:										//lam, b_p, q_p are parameters of the eqution
 public:
 	Equation (vector<double> _lambda, vector<double> _b_p, vector<double> _q_p, double _m) :lam(_lambda), b_p(_b_p), q_p(_q_p), m(_m) {}
 
-	double evalFunc(double x) {				//evaluates function value at point x
+	double evalFunc(double x) {	//evaluates function value at point x
 		double f = -m/4;
 		double num;
 		double denum;
@@ -314,7 +314,7 @@ public:
 		return f;
 	}
 
-	double root(double a , double b) {		//finds the root of a monotonic function in the interval [a,b]
+	double root(double a , double b) {	//finds the root of a monotonic function in the interval [a,b]
 		double c = a;
 		double fa = evalFunc(a);
 		double fb = evalFunc(b);
@@ -359,7 +359,7 @@ public:
 	}
 };
 
-double* makeQ_L(double** adj , int m , vector<double> q) {			//generates the upper_triangle part of the matrix Q_L, and puts it a 1-d array to be used in the eigen-decomposition algorithm
+double* makeQ_L(double** adj , int m , vector<double> q) {	//generates the upper_triangle part of the matrix Q_L, and puts it a 1-d array to be used in the eigen-decomposition algorithm
 	double* sumWeight = new double[m];
 	for (int i = 0; i<m; i++) {
 		sumWeight[i] = 0;
@@ -490,10 +490,10 @@ bool prune(double ** Adj, const vector<vertex> & candList, const vector<int> & S
 		for (int i = 0; i < m; i++)  delete[] E[i];
 		delete[] E;
 	}
-	//cout << "  " << W + Z_L;												(%%%)
-	//cout << endl << "QP bound:  " << Z_L;									(^^^)
-	//cout << '\t' << "TRV bound: " << sumLINKweight + sumCANDweight;		(^^^)
-	//cout << '\t' << "BEST:  ";											(^^^)
+	//cout << "  " << W + Z_L;	//(%%%)
+	//cout << endl << "QP bound:  " << Z_L;		//(^^^)
+	//cout << '\t' << "TRV bound: " << sumLINKweight + sumCANDweight;	//(^^^)
+	//cout << '\t' << "BEST:  ";	//(^^^)
 	double upperBound;
 	if (Z_L == 0) {
 		badMAT++;
@@ -502,12 +502,12 @@ bool prune(double ** Adj, const vector<vertex> & candList, const vector<int> & S
 	else if (Z_L <= sumLINKweight + sumCANDweight) {
 		qp_bound_count++;
 		upperBound = Z_L;
-		//cout << "QP";														(^^^)
+		//cout << "QP";		//(^^^)
 	}
 	else {
 		trv_bound_count++;
 		upperBound = sumLINKweight + sumCANDweight;
-		//cout << "TRV";													(^^^)
+		//cout << "TRV";	//(^^^)
 	}
 	qp_trv += Z_L / (sumLINKweight + sumCANDweight);
 	if ( W + upperBound <= Wmax) {
@@ -518,12 +518,12 @@ bool prune(double ** Adj, const vector<vertex> & candList, const vector<int> & S
 
 void EXPAND (double ** Adj, vector<vertex> & U, vector<int> & S, double & W, double & Wmax, int & count, int & qp_bound_count, int & trv_bound_count, double & qp_trv, int & badMAT) {
 	count++;
-	//cout << endl << count;			(%%%)
+	//cout << endl << count;	//(%%%)
 	while (! U.empty() ) {
 		vertex v;
 		v.n = (U.end() - 1)->n;
 		bool prn = prune(Adj, U, S, W, Wmax, qp_bound_count, trv_bound_count, qp_trv, badMAT);
-		//cout << "  " <<prn;			(%%%)
+		//cout << "  " <<prn;	//(%%%)
 		if (prn == false) {
 			double addedWeight = 0;
 			if (S.size() != 0) {
