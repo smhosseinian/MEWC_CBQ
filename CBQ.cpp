@@ -14,7 +14,7 @@
   (2) Intel(R) MKL library works only with "Intel C++" or "Visual C++" compilers.
   (3) In the following code, (%%%) indicates intermediate output (display) to observe the prunning process.
   (4) In the following code, (^^^) indicates intermediate output (display) to observe comparison of 
-      QP relaxation bound and the trivial (TRV) bound of sum of edge weights.
+      QP relaxation bound and the TRV bound of sum of edge weights.
   (5) Before running the code, define N and GRAPH, e.g., 
       #define N 200
       #define GRAPH "brock200_2.clq"
