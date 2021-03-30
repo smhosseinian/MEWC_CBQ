@@ -2,7 +2,7 @@
 
 # A Nonconvex Quadratic Optimization Approach to MEWC
 
-This repository contains the code accompanying the following paper:
+This repository contains the code accompanying the following article:
 
 > **S. Hosseinian, D.B.M.M. Fontes and S. Butenko. [A Nonconvex Quadratic Optimization Approach to the Maximum Edge Weight Clique Problem.](https://doi.org/10.1007/s10898-018-0630-5) _Journal of Global Optimization 72.2 (2018): 219-240_.**
 
